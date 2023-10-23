@@ -327,13 +327,14 @@ namespace MultiplayerLevelInformation.Views
                         var idb = getDifficultyBeatmap();
                         if (idb is CustomDifficultyBeatmap customdiff)
                         {
-                            float firstWallBeat = 0;
-                            if ((firstWallBeat = Utils.BeatmapPatternDetection.CheckForCrouchWalls(customdiff.beatmapSaveData.obstacles)) > 0)
+                            float firstWallBeat = -1;
+                            var count = 0;
+                            if ((firstWallBeat = Utils.BeatmapPatternDetection.CheckForCrouchWalls(customdiff.beatmapSaveData.obstacles, ref count)) != -1)
                             {
                                 var firstWallTime = firstWallBeat * (60.0F / customdiff.beatsPerMinute);
                                 var firstWallText = $"{((int)Math.Floor(firstWallTime / 60)).ToString("D2")}：{((int)Math.Floor(firstWallTime % 60)).ToString("D2")} . {((int)Math.Floor((firstWallTime * 100) % 100)).ToString("D2")}";
 
-                                wallText.text += $" <b><size=3.0><color=#FF0>⚠{firstWallText}</color></size></b>";
+                                wallText.text += $" <b><size=3.0><color=#FF0>⚠{firstWallText}({count})</color></size></b>";
                             }
                         }
                     });

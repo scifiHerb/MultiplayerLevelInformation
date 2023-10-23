@@ -31,12 +31,13 @@ namespace MultiplayerLevelInformation.Utils
             SOFTWARE.
         */
 
-        public static float CheckForCrouchWalls(List<BeatmapSaveDataVersion3.BeatmapSaveData.ObstacleData> obstacles)
+        public static float CheckForCrouchWalls(List<BeatmapSaveDataVersion3.BeatmapSaveData.ObstacleData> obstacles,ref int count)
         {
             if (obstacles == null || obstacles.Count == 0)
                 return -1;
 
             var wallExistence = new float[2];
+            float beat = -1;
 
             foreach (var o in obstacles)
             {
@@ -52,7 +53,11 @@ namespace MultiplayerLevelInformation.Utils
                 if (o.width > 2 || (o.width == 2 && o.line == 1))
                 {
                     if (o.layer == 2 || o.layer != 0 && (o.height - o.layer >= 2))
-                        return o.beat;
+                    {
+                        count++;
+                        if (beat == -1) beat = o.beat; 
+                        continue;
+                    }
                 }
 
                 // Is the wall on the left or right half?
@@ -61,12 +66,16 @@ namespace MultiplayerLevelInformation.Utils
                 // Check if the other half has an active wall, which would mean there is one on both halfs
                 // I know this technically does not check if one of the halves is half-height, but whatever
                 if (wallExistence[isLeftHalf ? 1 : 0] >= o.beat)
-                    return o.beat;
+                {
+                    count++;
+                    if (beat == -1) beat = o.beat;
+                    continue;
+                }
 
                 // Extend wall lengths by 120ms so that staggered crouchwalls that dont overlap are caught
                 wallExistence[isLeftHalf ? 0 : 1] = Math.Max(wallExistence[isLeftHalf ? 0 : 1], o.beat + o.duration + 0.12f);
             }
-            return -1;
+            return beat;
         }
     }
 }
