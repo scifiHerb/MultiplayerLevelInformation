@@ -2,6 +2,7 @@
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
+using HMUI;
 using MultiplayerLevelInformation.APIs;
 using System;
 using System.Collections;
@@ -326,9 +327,13 @@ namespace MultiplayerLevelInformation.Views
                         var idb = getDifficultyBeatmap();
                         if (idb is CustomDifficultyBeatmap customdiff)
                         {
-                            if (Utils.BeatmapPatternDetection.CheckForCrouchWalls(customdiff.beatmapSaveData.obstacles))
+                            float firstWallBeat = 0;
+                            if ((firstWallBeat = Utils.BeatmapPatternDetection.CheckForCrouchWalls(customdiff.beatmapSaveData.obstacles)) > 0)
                             {
-                                wallText.text += " <b><size=3.0><color=#FF0>⚠</color></size></b>";
+                                var firstWallTime = firstWallBeat * (60.0F / customdiff.beatsPerMinute);
+                                var firstWallText = $"{((int)Math.Floor(firstWallTime / 60)).ToString("D2")}：{((int)Math.Floor(firstWallTime % 60)).ToString("D2")} . {((int)Math.Floor((firstWallTime * 100) % 100)).ToString("D2")}";
+
+                                wallText.text += $" <b><size=3.0><color=#FF0>⚠{firstWallText}</color></size></b>";
                             }
                         }
                     });

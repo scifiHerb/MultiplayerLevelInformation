@@ -73,10 +73,10 @@
 				<text id='duration-text' font-size='3.0' text='-' color='#aaaaaa'></text>
 			</horizontal>
 			<horizontal min-width='10'>
-				<text font-size='3.0' text='★'></text>
+				<text font-size='3.0' text='WALL'></text>
 			</horizontal>
-			<horizontal min-width='10'>
-				<text id='star-text' font-size='3.0' text='-' color='#aaaaaa'></text>
+			<horizontal min-width='10' preferred-width='10'>
+				<text id='wall-text' overflow-mode='Overflow' word-wrapping='false' font-size='3.0' text='-' color='#aaaaaa'></text>
 			</horizontal>
 			<horizontal min-width='10'>
 				<text font-size='3.0' text=''></text>
@@ -100,10 +100,10 @@
 				<text id='note-text' font-size='3.0' text='-' color='#aaaaaa'></text>
 			</horizontal>
 			<horizontal min-width='10'>
-				<text font-size='3.0' text='WALL'></text>
+				<text font-size='3.0' text='★'></text>
 			</horizontal>
-			<horizontal min-width='10' preferred-width='10'>
-				<text id='wall-text' overflow-mode='Ellipsis' word-wrapping='false' font-size='3.0' text='-' color='#aaaaaa'></text>
+			<horizontal min-width='10'>
+				<text id='star-text' font-size='3.0' text='-' color='#aaaaaa'></text>
 			</horizontal>
 			<horizontal min-width='10'>
 				<text font-size='3.0' text='BOMB'></text>
